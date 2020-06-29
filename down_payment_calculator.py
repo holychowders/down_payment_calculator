@@ -1,6 +1,6 @@
 """
-Original Author: https://github.com/jsashbeck
-Refactor Author: https://github.com/holychowders
+Author: https://github.com/holychowders
+Forked from https://github.com/jsashbeck
 """
 
 from time import sleep
@@ -52,8 +52,8 @@ def run_down_payment_calculator():
     except AssertionError as ae:
         print(f'\nAssertionError: {ae}\a')
         return
-    except Exception:
-        print('\nUh oh. An unknown error occured!\a')
+    except Exception as e:
+        print(f'\nAn error occured: {repr(e)}\a')
         return
 
 
@@ -61,7 +61,6 @@ def run_down_payment_calculator():
         months = 0
         monthly_salary = annual_salary / 12
         monthly_interest_percent = annual_interest_percent / 12
-
         down_payment_dollars = down_payment_percent * house_cost
         monthly_salary_saved_dollars = (
             annual_salary_saved_percent * monthly_salary)
@@ -70,7 +69,8 @@ def run_down_payment_calculator():
 
             savings_dollars = (
                 savings_dollars * (1 + monthly_interest_percent) +
-                    monthly_salary_saved_dollars)
+                    monthly_salary_saved_dollars
+            )
 
             months += 1
 
@@ -80,16 +80,16 @@ def run_down_payment_calculator():
                 )
                 return
 
+        success = True
         print('\nResult:\nYou would need to save for '\
             f'{months // 12} years, {months % 12} months'
         )
-        success = True
 
     finally:
-        if success == True:
+        if success:
             print("\n\nThanks for using this calculator!")
             input('\nPress "Enter" to end: ')
             print('Goodbye!')
             sleep(2)
         else:
-            input("\n\nPress Enter to end the program")
+            input('\n\nPress "Enter" to end: ')
