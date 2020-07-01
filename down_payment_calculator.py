@@ -15,43 +15,43 @@ def run_down_payment_calculator():
         'Payment on Dream House.\n\n'
     )
 
+
     try:
         house_cost = float(input('Enter cost of house: '))
-        assert house_cost > 0, (
-            'The cost of your house must be greater than 0'
-        )
+        if not (house_cost > 0):
+            raise ValueError('The cost of your house must be greater than 0')
 
         down_payment_percent = (float(input(
             'Enter down payment percentage (ie, 25.2 for 25.2%): ')) / 100
         )
-        assert 0 < down_payment_percent <= 1, (
-            'Down payment percentage must range between 0 and 100'
-        )
+        if not (0 < down_payment_percent) <= 1:
+            raise ValueError('Down payment percentage must range between 0 and 100')
 
         savings_dollars = float(input("Enter reserved savings: "))
-        assert savings_dollars >= 0, 'Reserved savings must not be negative'
+        if not (savings_dollars >= 0):
+            raise ValueError('Reserved savings must not be negative')
 
         annual_salary = float(input('Enter your salary: '))
-        assert annual_salary > 0, 'Salary must be greater than 0'
+        if not (annual_salary > 0):
+            raise ValueError('Salary must be greater than 0')
 
         annual_salary_saved_percent = (float(input(
             'Enter percentage of salary saved (ie, 25 for 25%): ')) / 100
         )
-        assert 0 < annual_salary_saved_percent <= 1, (
-            'Percentage salary saved must range between 0 and 100'
-        )
+        if not (0 < annual_salary_saved_percent <= 1):
+            raise ValueError('Percentage salary saved must range between 0 and 100')
 
         annual_interest_percent = float(input('Enter interest rate: ')) / 100
-        assert 0 <= annual_interest_percent <= 1, (
-            'Annual interest rate must range between 0 and 100'
-        )
+        if not (0 <= annual_interest_percent <= 1):
+            raise ValueError('Annual interest rate must range between 0 and 100')
 
-    except ValueError:
-        print('\nValueError: You must enter only real number values.\a')
+    except ValueError as ve:
+        if 'could not convert string to float' in ve.args[0]:
+            print('\nValue Error: You must enter only real number values.\a')
+        else:
+            print(f'\nValue Error: {ve}')
         return
-    except AssertionError as ae:
-        print(f'\nAssertionError: {ae}\a')
-        return
+
     except Exception as e:
         print(f'\nAn error occured: {repr(e)}\a')
         return
