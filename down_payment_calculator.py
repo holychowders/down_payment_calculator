@@ -10,38 +10,48 @@ def run_down_payment_calculator():
     Calculate number of years/months of saving required to afford down payment.
     """
 
-    success = False
     print('\nCalculate the Time Required to Save In Order to Afford Down '\
         'Payment on Dream House.\n\n'
     )
 
+    success = False
+
+    def get(msg, percent=False):
+        """
+        Prompt user for amount and return float.
+        percent takes bool and returns amount/100; default False
+        """
+        amount = float(input(msg))
+        if not percent: return amount
+        elif percent: return amount/100
+
 
     try:
-        house_cost = float(input('Enter cost of house: '))
+        house_cost = get('Enter cost of house: ')
         if not (house_cost > 0):
             raise ValueError('The cost of your house must be greater than 0')
 
-        down_payment_percent = (float(input(
-            'Enter down payment percentage (ie, 25.2 for 25.2%): ')) / 100
+        down_payment_percent = get(
+            'Enter down payment percentage (ie, 25.2 for 25.2%): ', True
         )
-        if not (0 < down_payment_percent) <= 1:
+        if not (0 < down_payment_percent <= 1):
             raise ValueError('Down payment percentage must range between 0 and 100')
 
-        savings_dollars = float(input("Enter reserved savings: "))
+        savings_dollars = get("Enter reserved savings: ")
         if not (savings_dollars >= 0):
             raise ValueError('Reserved savings must not be negative')
 
-        annual_salary = float(input('Enter your salary: '))
+        annual_salary = get('Enter your salary: ')
         if not (annual_salary > 0):
             raise ValueError('Salary must be greater than 0')
 
-        annual_salary_saved_percent = (float(input(
-            'Enter percentage of salary saved (ie, 25 for 25%): ')) / 100
+        annual_salary_saved_percent = get(
+            'Enter percentage of salary saved (ie, 25 for 25%): ', True
         )
         if not (0 < annual_salary_saved_percent <= 1):
             raise ValueError('Percentage salary saved must range between 0 and 100')
 
-        annual_interest_percent = float(input('Enter interest rate: ')) / 100
+        annual_interest_percent = get('Enter interest rate: 0', True)
         if not (0 <= annual_interest_percent <= 1):
             raise ValueError('Annual interest rate must range between 0 and 100')
 
@@ -50,6 +60,7 @@ def run_down_payment_calculator():
             print('\nValue Error: You must enter only real number values.\a')
         else:
             print(f'\nValue Error: {ve}')
+
         return
 
     except Exception as e:
