@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 """
 Author: https://github.com/holychowders
 Forked from https://github.com/jsashbeck
 """
 
 from time import sleep
+
 
 def run_down_payment_calculator():
     """
@@ -104,3 +106,5 @@ def run_down_payment_calculator():
             sleep(2)
         else:
             input('\n\nPress "Enter" to end: ')
+
+run_down_payment_calculator()
