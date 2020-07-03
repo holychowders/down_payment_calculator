@@ -25,7 +25,7 @@ def run_down_payment_calculator():
         """
         amount = float(input(msg))
         if not percent: return amount
-        elif percent: return amount/100
+        else percent: return amount/100
 
 
     try:
