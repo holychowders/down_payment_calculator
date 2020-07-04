@@ -22,7 +22,7 @@ def run_down_payment_calculator():
         """
         amount = float(input(msg))
         if not percent: return amount
-        else percent: return amount/100
+        else: return amount/100
 
 
     try:
@@ -103,5 +103,6 @@ def run_down_payment_calculator():
             sleep(2)
         else:
             input('\n\nPress "Enter" to end: ')
+
 
 run_down_payment_calculator()
