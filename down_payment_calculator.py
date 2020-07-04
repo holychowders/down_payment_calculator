@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-Author: https://github.com/holychowders
-Forked from https://github.com/jsashbeck
-"""
+"""Calculate number of years/months of saving required to afford down payment."""
 
 from time import sleep
 
