@@ -4,6 +4,17 @@
 from time import sleep
 
 
+def get(msg, percent=False):
+    """
+    Prompt user for amount and return float.
+
+    percent takes bool and returns amount/100; default False.
+    """
+    amount = float(input(msg))
+    if not percent: return amount
+    else: return amount/100
+
+
 def run():
     """
     Calculate number of years/months of saving required to afford down payment.
@@ -14,15 +25,6 @@ def run():
     )
 
     success = False
-
-    def get(msg, percent=False):
-        """
-        Prompt user for amount and return float.
-        percent takes bool and returns amount/100; default False
-        """
-        amount = float(input(msg))
-        if not percent: return amount
-        else: return amount/100
 
 
     try:
