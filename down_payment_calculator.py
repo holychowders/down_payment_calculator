@@ -4,7 +4,7 @@
 from time import sleep
 
 
-def run_down_payment_calculator():
+def run():
     """
     Calculate number of years/months of saving required to afford down payment.
     """
@@ -105,4 +105,4 @@ def run_down_payment_calculator():
             input('\n\nPress "Enter" to end: ')
 
 
-run_down_payment_calculator()
+run()
