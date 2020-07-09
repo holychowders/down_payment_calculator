@@ -88,7 +88,7 @@ def main():
             print("Overflow Error: It would take in excess of "\
                 "150 years of saving in order to afford down payment.\a"
             )
-            return
+            prompt(f"Type '{RESTART_KW}' to restart or type '{EXIT_KW}' to end: ", finished=True)
 
     newline(2)
     print(f"Result: {months // 12} years, {months % 12} months")
