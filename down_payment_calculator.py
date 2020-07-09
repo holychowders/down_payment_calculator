@@ -22,8 +22,8 @@ def prompt(msg, gt=None, Lt=None, percent=False, finished=False):
     val = input(f"{msg}")
 
     # Check input for command keywords and execute if present.
-    if EXIT_KW in val: exit()
-    elif RESTART_KW in val:
+    if val == EXIT_KW: exit()
+    elif val == RESTART_KW:
         newline(2)
         main()
 
