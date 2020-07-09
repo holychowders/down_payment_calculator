@@ -21,18 +21,14 @@ def prompt(msg, gt=None, Lt=None, percent=False, finished=False):
     newline()
     val = input(f"{msg}")
 
-
     # Check input for command keywords and execute if present.
     if EXIT_KW in val: exit()
-
     elif RESTART_KW in val:
         newline(2)
         main()
 
-
-    # If at end, we should only accept the above keywords.
+    # If at end, accept only the above keywords.
     if finished: return prompt(f"{msg} \a", finished=True)
-
 
     # Attempt conversion and validation.
     try:
@@ -44,21 +40,19 @@ def prompt(msg, gt=None, Lt=None, percent=False, finished=False):
             if not (val >= gt):
                 raise ValueError(f"Please enter a number greater than {gt}")
 
-        if percent: val /= 100
-
-        return val
+        if percent: return val/100
+        else: return val
 
     except ValueError as ve:
         if "could not convert string to float" in ve.args[0]:
             print("Please enter a valid input \a")
-
         else: print(f"{ve} \a")
 
         return prompt(msg, gt, Lt, percent)
 
 
 def main():
-    """Calculate number of years/months of saving required to afford down payment"""
+    """Calculate number of years/months of saving required to afford down payment."""
 
     newline()
     print(23 * "-")
@@ -82,23 +76,19 @@ def main():
     monthly_salary_saved_dollars = (
         annual_salary_saved_percent * monthly_salary)
 
-
     # Calculate and print result
     while savings_dollars < down_payment_dollars:
         savings_dollars = (
             savings_dollars * (1 + monthly_interest_percent) +
                 monthly_salary_saved_dollars
         )
-
         months += 1
-
         if months > 1800:
             newline()
             print("Overflow Error: It would take in excess of "\
                 "150 years of saving in order to afford down payment.\a"
             )
             return
-
 
     newline(2)
     print(f"Result: {months // 12} years, {months % 12} months")
