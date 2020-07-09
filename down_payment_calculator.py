@@ -1,110 +1,111 @@
 #!/usr/bin/env python3
 """Calculate number of years/months of saving required to afford down payment."""
 
-from time import sleep
+EXIT_KW = "exit"
+RESTART_KW = "rerun"
 
 
-def get(msg, percent=False):
+def newline(count=1):
+    """Print a number, count, of newlines. Use outside of print statements."""
+    print(count * "\n", end="")
+
+
+def prompt(msg, gt=None, Lt=None, percent=False, finished=False):
     """
-    Prompt user for amount and return float.
+    Return converted numerical value from input if not request to exit or restart main.
 
-    percent takes bool and returns amount/100; default False.
+    gt/Lt are lower/upper numerical limit. Lt not accepted alone;
+    Execute requests to restart or exit.
+    Print error message when value not in range and recall prompt with same arguments.
     """
-    amount = float(input(msg))
-    if not percent: return amount
-    else: return amount/100
+    newline()
+    val = input(f"{msg}")
 
 
-def run():
-    """
-    Calculate number of years/months of saving required to afford down payment.
-    """
+    # Check input for command keywords and execute if present.
+    if EXIT_KW in val: exit()
 
-    print('\nCalculate the Time Required to Save In Order to Afford Down '\
-        'Payment on Dream House.\n\n'
-    )
-
-    success = False
+    elif RESTART_KW in val:
+        newline(2)
+        main()
 
 
+    # If at end, we should only accept the above keywords.
+    if finished: return prompt(f"{msg} \a", finished=True)
+
+
+    # Attempt conversion and validation.
     try:
-        house_cost = get('Enter cost of house: ')
-        if not (house_cost > 0):
-            raise ValueError('The cost of your house must be greater than 0')
+        val = float(val)
 
-        down_payment_percent = get(
-            'Enter down payment percentage (ie, 25.2 for 25.2%): ', True
-        )
-        if not (0 < down_payment_percent <= 1):
-            raise ValueError('Down payment percentage must range between 0 and 100')
+        if gt != None:
+            if Lt and not (gt <= val <= Lt):
+                raise ValueError(f"Please enter a number between {gt} and {Lt}")
+            if not (val >= gt):
+                raise ValueError(f"Please enter a number greater than {gt}")
 
-        savings_dollars = get("Enter reserved savings: ")
-        if not (savings_dollars >= 0):
-            raise ValueError('Reserved savings must not be negative')
+        if percent: val /= 100
 
-        annual_salary = get('Enter your salary: ')
-        if not (annual_salary > 0):
-            raise ValueError('Salary must be greater than 0')
-
-        annual_salary_saved_percent = get(
-            'Enter percentage of salary saved (ie, 25 for 25%): ', True
-        )
-        if not (0 < annual_salary_saved_percent <= 1):
-            raise ValueError('Percentage salary saved must range between 0 and 100')
-
-        annual_interest_percent = get('Enter interest rate: 0', True)
-        if not (0 <= annual_interest_percent <= 1):
-            raise ValueError('Annual interest rate must range between 0 and 100')
+        return val
 
     except ValueError as ve:
-        if 'could not convert string to float' in ve.args[0]:
-            print('\nValue Error: You must enter only real number values.\a')
-        else:
-            print(f'\nValue Error: {ve}')
+        if "could not convert string to float" in ve.args[0]:
+            print("Please enter a valid input \a")
 
-        return
+        else: print(f"{ve} \a")
 
-    except Exception as e:
-        print(f'\nAn error occured: {repr(e)}\a')
-        return
+        return prompt(msg, gt, Lt, percent)
 
 
-    else:
-        months = 0
-        monthly_salary = annual_salary / 12
-        monthly_interest_percent = annual_interest_percent / 12
-        down_payment_dollars = down_payment_percent * house_cost
-        monthly_salary_saved_dollars = (
-            annual_salary_saved_percent * monthly_salary)
+def main():
+    """Calculate number of years/months of saving required to afford down payment"""
 
-        while savings_dollars < down_payment_dollars:
+    newline()
+    print(23 * "-")
+    print("Down Payment Calculator")
+    print(23 * "-")
+    print(f"Type '{EXIT_KW}' or '{RESTART_KW}' at any time")
+    newline()
 
-            savings_dollars = (
-                savings_dollars * (1 + monthly_interest_percent) +
-                    monthly_salary_saved_dollars
-            )
 
-            months += 1
+    house_cost = prompt("Cost of dream house: ", 1)
+    down_payment_percent = prompt("Down payment percentage (eg, 25.2): ", 1, 100, True)
+    savings_dollars = prompt("Savings set aside: ", 0)
+    annual_salary = prompt("Annual salary: ", 1)
+    annual_salary_saved_percent = prompt("Enter percentage of salary saved: ", 1, 100, True)
+    annual_interest_percent = prompt("Enter interest rate: ", 0, 100, True)
 
-            if months > 1800:
-                print('\nOverflowError: It would take in excess of '\
-                    '150 years of saving in order to afford down payment.\a'
-                )
-                return
+    months = 0
+    monthly_salary = annual_salary / 12
+    monthly_interest_percent = annual_interest_percent / 12
+    down_payment_dollars = down_payment_percent * house_cost
+    monthly_salary_saved_dollars = (
+        annual_salary_saved_percent * monthly_salary)
 
-        success = True
-        print('\nResult:\nYou would need to save for '\
-            f'{months // 12} years, {months % 12} months'
+
+    # Calculate and print result
+    while savings_dollars < down_payment_dollars:
+        savings_dollars = (
+            savings_dollars * (1 + monthly_interest_percent) +
+                monthly_salary_saved_dollars
         )
 
-    finally:
-        if success:
-            print("\n\nThanks for using this calculator!")
-            input('\nPress "Enter" to end: ')
-            print('Goodbye!')
-            sleep(2)
-        else:
-            input('\n\nPress "Enter" to end: ')
+        months += 1
+
+        if months > 1800:
+            newline()
+            print("Overflow Error: It would take in excess of "\
+                "150 years of saving in order to afford down payment.\a"
+            )
+            return
 
 
-run()
+    newline(2)
+    print(f"Result: {months // 12} years, {months % 12} months")
+    newline(2)
+
+
+    prompt(f"Type '{RESTART_KW}' to restart or type '{EXIT_KW}' to end: ", finished=True)
+
+
+main()
