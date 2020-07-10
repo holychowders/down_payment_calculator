@@ -28,7 +28,7 @@ def prompt(msg, gt=None, Lt=None, percent=False, finished=False):
         main()
 
     # If at end, accept only the above keywords.
-    if finished: return prompt(f"{msg} \a", finished=True)
+    if finished: return prompt(f"{msg}\a", finished=True)
 
     # Attempt conversion and validation.
     try:
