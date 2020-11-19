@@ -5,57 +5,6 @@ EXIT_KEYWORD = "exit"
 RESTART_KEYWORD = "rerun"
 
 
-def print_newline(count=1):
-    print(count * "\n", end="")
-
-
-def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_int=False, at_program_end=False):
-    """
-    Return converted numerical value from input if not request to exit or restart main.
-
-    lower_limit/upper_limit are lower/upper numerical limit. upper_limit not accepted alone;
-    Execute requests to restart or exit.
-    Print error message when value not in range and recall get_user_input with same arguments.
-    """
-    print_newline()
-    user_input = input(f"{message}")
-
-    user_wants_to_exit = (user_input == EXIT_KEYWORD)
-    user_wants_to_restart = (user_input == RESTART_KEYWORD)
-    if user_wants_to_exit: exit()
-    elif user_wants_to_restart:
-        print_newline(2)
-        main()
-
-    # If at end, accept only the above keywords.
-    if at_program_end: return get_user_input(f"{message}\a", at_program_end=True)
-
-    # Attempt conversion and validation.
-    try:
-        user_input = float(user_input)
-
-        if lower_limit != None:
-            if upper_limit:
-                is_user_input_valid = (lower_limit <= user_input <= upper_limit)
-                if not is_user_input_valid:
-                    raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
-            is_user_input_valid = (user_input >= lower_limit)
-            if not is_user_input_valid:
-                raise ValueError(f"Please enter a number greater than {lower_limit}")
-
-        if is_percent_as_int:
-            percent_int_as_decimal = user_input/100
-            return percent_int_as_decimal
-        else: return user_input
-
-    except ValueError as ve:
-        if "could not convert string to float" in ve.args[0]:
-            print("Please enter a valid input \a")
-        else: print(f"{ve} \a")
-
-        return get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
-
-
 def main():
     print_newline()
     print(23 * "-")
@@ -106,6 +55,57 @@ def main():
 
 
     get_user_input(f"Type '{RESTART_KEYWORD}' to restart or type '{EXIT_KEYWORD}' to end: ", at_program_end=True)
+
+
+def print_newline(count=1):
+    print(count * "\n", end="")
+
+
+def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_int=False, at_program_end=False):
+    """
+    Return converted numerical value from input if not request to exit or restart main.
+
+    lower_limit/upper_limit are lower/upper numerical limit. upper_limit not accepted alone;
+    Execute requests to restart or exit.
+    Print error message when value not in range and recall get_user_input with same arguments.
+    """
+    print_newline()
+    user_input = input(f"{message}")
+
+    user_wants_to_exit = (user_input == EXIT_KEYWORD)
+    user_wants_to_restart = (user_input == RESTART_KEYWORD)
+    if user_wants_to_exit: exit()
+    elif user_wants_to_restart:
+        print_newline(2)
+        main()
+
+    # If at end, accept only the above keywords.
+    if at_program_end: return get_user_input(f"{message}\a", at_program_end=True)
+
+    # Attempt conversion and validation.
+    try:
+        user_input = float(user_input)
+
+        if lower_limit != None:
+            if upper_limit:
+                is_user_input_valid = (lower_limit <= user_input <= upper_limit)
+                if not is_user_input_valid:
+                    raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
+            is_user_input_valid = (user_input >= lower_limit)
+            if not is_user_input_valid:
+                raise ValueError(f"Please enter a number greater than {lower_limit}")
+
+        if is_percent_as_int:
+            percent_int_as_decimal = user_input/100
+            return percent_int_as_decimal
+        else: return user_input
+
+    except ValueError as ve:
+        if "could not convert string to float" in ve.args[0]:
+            print("Please enter a valid input \a")
+        else: print(f"{ve} \a")
+
+        return get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
 
 
 main()
