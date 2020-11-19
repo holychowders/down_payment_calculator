@@ -37,10 +37,7 @@ def main():
                 "150 years of saving in order to afford down payment.\a"
             )
 
-    years_to_save = months_to_save // 12
-    remainder_months_to_save = months_to_save % 12
-    print_newline(2)
-    print(f"Result: {years_to_save} years, {remainder_months_to_save} months")
+    display_results(months_to_save)
 
 
 def print_newline(count=1):
@@ -52,6 +49,13 @@ def display_program_title():
     print(23 * "-")
     print("Down Payment Calculator")
     print(23 * "-")
+
+
+def display_results(months_to_save):
+    years_to_save = months_to_save // 12
+    remainder_months_to_save = months_to_save % 12
+    print_newline(2)
+    print(f"Result: {years_to_save} years, {remainder_months_to_save} months")
 
 
 def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_int=False):
