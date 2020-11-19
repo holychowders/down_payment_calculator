@@ -20,8 +20,10 @@ def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_in
     print_newline()
     user_input = input(f"{message}")
 
-    if user_input == EXIT_KEYWORD: exit()
-    elif user_input == RESTART_KEYWORD:
+    user_wants_to_exit = (user_input == EXIT_KEYWORD)
+    user_wants_to_restart = (user_input == RESTART_KEYWORD)
+    if user_wants_to_exit: exit()
+    elif user_wants_to_restart:
         print_newline(2)
         main()
 
@@ -33,12 +35,17 @@ def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_in
         user_input = float(user_input)
 
         if lower_limit != None:
-            if upper_limit and not (lower_limit <= user_input <= upper_limit):
-                raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
-            if not (user_input >= lower_limit):
+            if upper_limit:
+                is_user_input_valid = (lower_limit <= user_input <= upper_limit)
+                if not is_user_input_valid:
+                    raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
+            is_user_input_valid = (user_input >= lower_limit)
+            if not is_user_input_valid:
                 raise ValueError(f"Please enter a number greater than {lower_limit}")
 
-        if is_percent_as_int: return user_input/100
+        if is_percent_as_int:
+            percent_int_as_decimal = user_input/100
+            return percent_int_as_decimal
         else: return user_input
 
     except ValueError as ve:
@@ -73,21 +80,28 @@ def main():
         annual_salary_saved_percent * monthly_salary)
 
     # Calculate and print result
-    while savings_dollars < down_payment_dollars:
-        savings_dollars = (
-            savings_dollars * (1 + monthly_interest_percent) +
-                monthly_salary_saved_dollars
+    is_savings_enough = savings_dollars >= down_payment_dollars
+    while not is_savings_enough:
+        next_months_interest_dollars = (
+            savings_dollars * (1 + monthly_interest_percent)
+        )
+        savings_dollars = (next_months_interest_dollars +
+            monthly_salary_saved_dollars
         )
         months_to_save += 1
-        if months_to_save > 1800:
+        is_savings_enough = savings_dollars >= down_payment_dollars
+        is_too_long_to_save = months_to_save > 1800  # 1800 months is 150 years
+        if is_too_long_to_save:
             print_newline()
             print("Overflow Error: It would take in excess of "\
                 "150 years of saving in order to afford down payment.\a"
             )
             get_user_input(f"Type '{RESTART_KEYWORD}' to restart or type '{EXIT_KEYWORD}' to end: ", at_program_end=True)
 
+    years_to_save = months_to_save // 12
+    remainder_months_to_save = months_to_save % 12
     print_newline(2)
-    print(f"Result: {months_to_save // 12} years, {months_to_save % 12} months")
+    print(f"Result: {years_to_save} years, {remainder_months_to_save} months")
     print_newline(2)
 
 
