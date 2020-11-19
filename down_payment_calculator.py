@@ -6,7 +6,6 @@ RESTART_KEYWORD = "rerun"
 
 
 def print_newline(count=1):
-    """Print a number, count, of newlines. Use outside of print statements."""
     print(count * "\n", end="")
 
 
@@ -21,7 +20,6 @@ def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_in
     print_newline()
     user_input = input(f"{message}")
 
-    # Check input for command keywords and execute if present.
     if user_input == EXIT_KEYWORD: exit()
     elif user_input == RESTART_KEYWORD:
         print_newline(2)
@@ -52,8 +50,6 @@ def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_in
 
 
 def main():
-    """Calculate number of years/months of saving required to afford down payment."""
-
     print_newline()
     print(23 * "-")
     print("Down Payment Calculator")
