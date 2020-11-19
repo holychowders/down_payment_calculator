@@ -3,11 +3,7 @@
 
 
 def main():
-    print_newline()
-    print(23 * "-")
-    print("Down Payment Calculator")
-    print(23 * "-")
-
+    display_program_title()
 
     house_cost = get_user_input("Cost of dream house: ", 1)
     down_payment_percent = get_user_input("Down payment percentage (eg, 25.2): ", 1, 100, True)
@@ -49,6 +45,13 @@ def main():
 
 def print_newline(count=1):
     print(count * "\n", end="")
+
+
+def display_program_title():
+    print_newline()
+    print(23 * "-")
+    print("Down Payment Calculator")
+    print(23 * "-")
 
 
 def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_int=False):
