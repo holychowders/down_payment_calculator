@@ -73,11 +73,11 @@ def get_user_input(message, lower_limit=None, upper_limit=None, is_percent_as_in
     try:
         user_input = float(user_input)
 
-        if lower_limit != None:
-            if upper_limit:
-                is_user_input_valid = (lower_limit <= user_input <= upper_limit)
-                if not is_user_input_valid:
-                    raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
+        if lower_limit and upper_limit:
+            is_user_input_valid = (lower_limit <= user_input <= upper_limit)
+            if not is_user_input_valid:
+                raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
+        else:
             is_user_input_valid = (user_input >= lower_limit)
             if not is_user_input_valid:
                 raise ValueError(f"Please enter a number greater than {lower_limit}")
