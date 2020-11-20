@@ -19,7 +19,7 @@ def main():
     monthly_salary_saved_dollars = (
         annual_salary_saved_percent * monthly_salary)
 
-    # Calculate and print result
+    # Calculate result
     is_savings_enough = savings_dollars >= down_payment_dollars
     while not is_savings_enough:
         next_months_interest_dollars = (
