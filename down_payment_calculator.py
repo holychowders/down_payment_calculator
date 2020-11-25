@@ -36,6 +36,7 @@ def main():
             print("Overflow Error: It would take in excess of "\
                 "150 years of saving in order to afford down payment.\a"
             )
+            exit()
 
     display_results(months_to_save)
 
