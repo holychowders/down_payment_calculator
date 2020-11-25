@@ -7,31 +7,31 @@ class Calculator:
     def main(self):
         self.display_program_title()
 
-        house_cost = self.get_user_input("Cost of dream house: ", 1)
-        down_payment_percent = self.get_user_input("Down payment percentage (eg, 25.2): ", 1, 100, True)
-        savings_dollars = self.get_user_input("Savings set aside: ", 0)
-        annual_salary = self.get_user_input("Annual salary: ", 1)
-        annual_salary_saved_percent = self.get_user_input("Enter percentage of salary saved: ", 1, 100, True)
-        annual_interest_percent = self.get_user_input("Enter interest rate: ", 0, 100, True)
+        self.house_cost = self.get_user_input("Cost of dream house: ", 1)
+        self.down_payment_percent = self.get_user_input("Down payment percentage (eg, 25.2): ", 1, 100, True)
+        self.savings_dollars = self.get_user_input("Savings set aside: ", 0)
+        self.annual_salary = self.get_user_input("Annual salary: ", 1)
+        self.annual_salary_saved_percent = self.get_user_input("Enter percentage of salary saved: ", 1, 100, True)
+        self.annual_interest_percent = self.get_user_input("Enter interest rate: ", 0, 100, True)
 
         self.months_to_save = 0
-        monthly_salary = annual_salary / 12
-        monthly_interest_percent = annual_interest_percent / 12
-        down_payment_dollars = down_payment_percent * house_cost
+        monthly_salary = self.annual_salary / 12
+        monthly_interest_percent = self.annual_interest_percent / 12
+        down_payment_dollars = self.down_payment_percent * self.house_cost
         monthly_salary_saved_dollars = (
-            annual_salary_saved_percent * monthly_salary)
+            self.annual_salary_saved_percent * monthly_salary)
 
         # Calculate result
-        is_savings_enough = savings_dollars >= down_payment_dollars
+        is_savings_enough = self.savings_dollars >= down_payment_dollars
         while not is_savings_enough:
             next_months_interest_dollars = (
-                savings_dollars * (1 + monthly_interest_percent)
+                self.savings_dollars * (1 + monthly_interest_percent)
             )
-            savings_dollars = (next_months_interest_dollars +
+            self.savings_dollars = (next_months_interest_dollars +
                 monthly_salary_saved_dollars
             )
             self.months_to_save += 1
-            is_savings_enough = savings_dollars >= down_payment_dollars
+            is_savings_enough = self.savings_dollars >= down_payment_dollars
             is_too_long_to_save = self.months_to_save > 1800  # 1800 months is 150 years
             if is_too_long_to_save:
                 self.print_newline()
