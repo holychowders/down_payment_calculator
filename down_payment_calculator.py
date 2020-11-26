@@ -84,10 +84,8 @@ class Calculator:
         # Attempt conversion and validation.
         try:
             user_input = float(user_input)
-        except ValueError as value_error:
-            value_error_message = value_error.args[0]
-            if "could not convert string to float" in value_error_message:
-                print("Please enter a valid input \a")
+        except ValueError:
+            print("Please enter a valid input \a")
             return self.get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
 
         if lower_limit and upper_limit:
