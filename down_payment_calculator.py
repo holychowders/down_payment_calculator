@@ -11,8 +11,8 @@ class Calculator:
         self.down_payment_percent = self.get_user_input("Down payment percentage (eg, 25.2): ", 1, 100, True)
         self.savings_dollars = self.get_user_input("Savings set aside: ", 0)
         self.annual_salary = self.get_user_input("Annual salary: ", 1)
-        self.annual_salary_saved_percent = self.get_user_input("Enter percentage of salary saved: ", 1, 100, True)
-        self.annual_interest_percent = self.get_user_input("Enter interest rate: ", 0, 100, True)
+        self.annual_salary_saved_percent = self.get_user_input("Percentage of salary saved: ", 1, 100, True)
+        self.annual_interest_percent = self.get_user_input("Interest rate: ", 0, 100, True)
 
         months_to_save = self.calculate_months_to_save()
         self.display_results(months_to_save)
