@@ -91,21 +91,15 @@ class Calculator:
         if lower_limit and upper_limit:
             is_user_input_valid = (lower_limit <= user_input <= upper_limit)
             if not is_user_input_valid:
-                try:
-                    raise ValueError(f"Please enter a number between {lower_limit} and {upper_limit}")
-                except ValueError as value_error:
-                    value_error_message = value_error.args[0]
-                    print(f"{value_error_message} \a")
-                    return self.get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
+                error_message =  (f"Please enter a number between {lower_limit} and {upper_limit}")
+                print(f"{error_message} \a")
+                return self.get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
         elif lower_limit:
             is_user_input_valid = (user_input >= lower_limit)
             if not is_user_input_valid:
-                try:
-                    raise ValueError(f"Please enter a number greater than {lower_limit}")
-                except ValueError as value_error:
-                    value_error_message = value_error.args[0]
-                    print(f"{value_error_message} \a")
-                    return self.get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
+                error_message = (f"Please enter a number greater than {lower_limit}")
+                print(f"{error_message} \a")
+                return self.get_user_input(message, lower_limit, upper_limit, is_percent_as_int)
 
         if is_percent_as_int:
             user_input_percent_as_decimal = user_input / 100
