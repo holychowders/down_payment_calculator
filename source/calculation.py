@@ -1,5 +1,3 @@
-import headers
-
 MONTHS_PER_YEAR = 12
 MAX_MONTHS_TO_SAVE = 1800  # 1800 months is 150 years
 OVERFLOW_ERROR_MSG = (f"Overflow Error: It would take too long to save.")
