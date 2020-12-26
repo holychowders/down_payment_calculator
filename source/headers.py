@@ -20,8 +20,11 @@ def print_program_title():
 
 @borders
 def print_months_as_years_and_months(months):
+    print(format_months_as_years_and_months(months))
+
+def format_months_as_years_and_months(months):
     months_per_year = 12
     years = months // months_per_year
     months = months % months_per_year
 
-    print(f"Result: {years} years, {months} months")
+    return f"Result: {years} years, {months} months"
