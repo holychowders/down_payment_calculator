@@ -33,10 +33,10 @@ class Calculation:
 
             if self.will_take_too_long_to_save():
                 raise OverflowError(OVERFLOW_ERROR_MSG)
-            else:
-                self.calculate_next_months_savings()
-        else:
-            return self.result_months
+
+            self.calculate_next_months_savings()
+
+        return self.result_months
 
     def calculate_next_months_savings(self):
         savings_from_interest = self.savings * (1 + self.monthly_interest)
