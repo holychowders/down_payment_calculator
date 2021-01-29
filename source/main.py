@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import headers
-from inputs import Inputs
+from inputs import InputsFromPrompt
 from calculation import Calculation
 
 def main():
     headers.print_program_title()
 
-    inputs = Inputs()
-    inputs.collect_inputs()
+    inputs = InputsFromPrompt()
+    inputs.collect()
 
     calculation = Calculation(
         inputs.house_cost, inputs.down_payment_percent,

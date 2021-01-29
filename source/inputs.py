@@ -1,21 +1,21 @@
 from rules import Rules, Intervals
-class Inputs:
-    def collect_inputs(self):
-        self.house_cost = collect_input(Rules.HOUSE_COST)
-        self.down_payment_percent = collect_input(Rules.DOWN_PAYMENT_PERCENT)
-        self.savings = collect_input(Rules.SAVINGS)
-        self.interest_on_savings = collect_input(Rules.INTEREST_ON_SAVINGS)
-        self.salary = collect_input(Rules.SALARY)
-        self.salary_percent_saved = collect_input(Rules.SALARY_PERCENT_SAVED)
+class InputsFromPrompt:
+    def collect(self):
+        self.house_cost = self._collect(Rules.HOUSE_COST)
+        self.down_payment_percent = self._collect(Rules.DOWN_PAYMENT_PERCENT)
+        self.savings = self._collect(Rules.SAVINGS)
+        self.interest_on_savings = self._collect(Rules.INTEREST_ON_SAVINGS)
+        self.salary = self._collect(Rules.SALARY)
+        self.salary_percent_saved = self._collect(Rules.SALARY_PERCENT_SAVED)
 
-def collect_input(rule):
-    value = input(rule.value.prompt)
+    def _collect(self, rule):
+        value = input(rule.value.prompt)
 
-    if is_input_valid(value, rule):
-        return float(value)
-    else:
-        print("Invalid input")
-        return collect_input(rule)
+        if is_input_valid(value, rule):
+            return float(value)
+        else:
+            print("Invalid input")
+            return self._collect(rule)
 
 def  is_input_valid(value, rule):
     if can_convert_to_float(value):
