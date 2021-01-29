@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import headers
-from inputs import InputsFromPrompt
+from collect_inputs import InputsFromPrompt
 from calculation import Calculation
 
 def main():
