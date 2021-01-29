@@ -17,9 +17,6 @@ class Calculation:
         self.salary = salary
         self.salary_percent_saved = salary_percent_saved
 
-        self.initialize_calculation_variables()
-
-    def initialize_calculation_variables(self):
         self.result_months = 0
 
         self.down_payment_amount = self.down_payment_percent * self.house_cost
