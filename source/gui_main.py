@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtWidgets as qtw
 
 from validate_inputs import is_input_valid, Rules
-from calculation import Calculation
+import calculation
 
 class GUI(qtw.QWidget):
     def __init__(self, *args, **kwargs):
@@ -71,9 +71,14 @@ class GUI(qtw.QWidget):
             self.result_label.setText('Invalid inputs')
             return
 
-        calculation = self.setup_calculation()
+        self._create_fields_as_floats_from_text()
+
         try:
-            result_months = calculation.calculate()
+            result_months = calculation.calculate(
+                self.house_cost, self.down_payment_percent,
+                self.savings, self.interest_on_savings,
+                self.salary, self.salary_percent_saved
+            )
         except OverflowError:
             self.result_label.setText("Error: Overflow")
             return
@@ -90,16 +95,6 @@ class GUI(qtw.QWidget):
                 return False
 
         return True
-
-    def setup_calculation(self):
-        self._create_fields_as_floats_from_text()
-
-        calculation = Calculation(
-            self.house_cost, self.down_payment_percent,
-            self.savings, self.interest_on_savings,
-            self.salary, self.salary_percent_saved)
-
-        return calculation
 
     def _create_fields_as_floats_from_text(self):
         self.house_cost = float(self.house_cost_field.text())
