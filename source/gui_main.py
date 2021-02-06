@@ -74,7 +74,7 @@ class GUI(qtw.QWidget):
         calculation = self.setup_calculation()
         try:
             result_months = calculation.calculate()
-        except OverflowError as oe:
+        except OverflowError:
             self.result_label.setText("Error: Overflow")
             return
 
