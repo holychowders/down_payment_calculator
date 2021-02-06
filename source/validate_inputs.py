@@ -61,11 +61,11 @@ class Intervals(Enum):
     is_right_open = is_left_closed = lambda interval: interval == Intervals.LEFT_CLOSED
 
 class Rules(Enum):
-    Rule = namedtuple('Rule', ('prompt', 'bounds', 'interval'))
+    Rule = namedtuple('Rule', ('prompt', 'bounds', 'interval', 'is_percent'))
 
-    HOUSE_COST           = Rule("Cost of house:        ", Bounds(1, INFINITY), Intervals.LEFT_CLOSED)
-    DOWN_PAYMENT_PERCENT = Rule("Down payment percent: ", Bounds(0, 100),      Intervals.CLOSED)
-    SAVINGS              = Rule("Saved:                ", Bounds(0, INFINITY), Intervals.LEFT_CLOSED)
-    INTEREST_ON_SAVINGS  = Rule("Savings interest:     ", Bounds(0, 100),      Intervals.CLOSED)
-    SALARY               = Rule("Salary:               ", Bounds(1, INFINITY), Intervals.LEFT_CLOSED)
-    SALARY_PERCENT_SAVED = Rule("Salary saved percent: ", Bounds(0, 100),      Intervals.CLOSED)
+    HOUSE_COST           = Rule("Cost of house:        ", Bounds(1, INFINITY), Intervals.LEFT_CLOSED, is_percent=False)
+    DOWN_PAYMENT_PERCENT = Rule("Down payment percent: ", Bounds(0, 100),      Intervals.CLOSED,      is_percent=True)
+    SAVINGS              = Rule("Saved:                ", Bounds(0, INFINITY), Intervals.LEFT_CLOSED, is_percent=False)
+    INTEREST_ON_SAVINGS  = Rule("Savings interest:     ", Bounds(0, 100),      Intervals.CLOSED,      is_percent=True)
+    SALARY               = Rule("Salary:               ", Bounds(1, INFINITY), Intervals.LEFT_CLOSED, is_percent=False)
+    SALARY_PERCENT_SAVED = Rule("Salary saved percent: ", Bounds(0, 100),      Intervals.CLOSED,      is_percent=True)

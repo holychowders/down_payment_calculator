@@ -13,7 +13,10 @@ class InputsFromPrompt:
         value = input(rule.value.prompt)
 
         if validate_inputs.is_input_valid(value, rule):
-            return float(value)
+            if rule.value.is_percent:
+                return (float(value) / 100)
+            else:
+                return float(value)
         else:
             print("Invalid input")
             return self._collect(rule)
