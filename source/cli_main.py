@@ -2,39 +2,29 @@ import cli_headers
 import validation
 import calculation
 
-class Inputs:
-    def collect(self):
-        self.house_cost = self._collect(validation.Rules.HOUSE_COST)
-        self.down_payment_percent = self._collect(validation.Rules.DOWN_PAYMENT_PERCENT)
-        self.savings = self._collect(validation.Rules.SAVINGS)
-        self.interest_on_savings = self._collect(validation.Rules.INTEREST_ON_SAVINGS)
-        self.salary = self._collect(validation.Rules.SALARY)
-        self.salary_percent_saved = self._collect(validation.Rules.SALARY_PERCENT_SAVED)
+def collect_input(rule):
+    value = input(rule.value.prompt)
 
-    def _collect(self, rule):
-        value = input(rule.value.prompt)
+    if validation.is_input_valid(value, rule):
+        value = float(value)
 
-        if validation.is_input_valid(value, rule):
-            if rule.value.is_percent:
-                return (float(value) / 100)
-            else:
-                return float(value)
-        else:
-            print("Invalid input")
-            return self._collect(rule)
+        return value/100 if rule.value.is_percent else value
+    else:
+        print("Invalid input")
+        return collect_input(rule)
 
 
 def main():
     cli_headers.print_program_title()
 
-    inputs = Inputs()
-    inputs.collect()
-
     try:
         result_months = calculation.calculate(
-            inputs.house_cost, inputs.down_payment_percent,
-            inputs.savings, inputs.interest_on_savings,
-            inputs.salary, inputs.salary_percent_saved
+            collect_input(validation.Rules.HOUSE_COST),
+            collect_input(validation.Rules.DOWN_PAYMENT_PERCENT),
+            collect_input(validation.Rules.SAVINGS),
+            collect_input(validation.Rules.INTEREST_ON_SAVINGS),
+            collect_input(validation.Rules.SALARY),
+            collect_input(validation.Rules.SALARY_PERCENT_SAVED),
         )
     except OverflowError as e:
         cli_headers.print_with_borders(e)
