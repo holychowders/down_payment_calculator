@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtWidgets as qtw
 
-from validate_inputs import is_input_valid, Rules
+import validation
 import calculation
 
 class GUI(qtw.QWidget):
@@ -88,10 +88,10 @@ class GUI(qtw.QWidget):
 
     def are_field_inputs_valid(self):
         fields = self.findChildren(qtw.QLineEdit)
-        rules = Rules
+        rules = validation.Rules
 
         for field, rule in zip(fields, rules):
-            if not is_input_valid(field.text(), rule):
+            if not validation.is_input_valid(field.text(), rule):
                 return False
 
         return True
