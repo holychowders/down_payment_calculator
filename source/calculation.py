@@ -28,6 +28,7 @@ def calculate(
 
 def calculate_next_months_savings(current_savings, monthly_interest, monthly_salary_savings):
     savings_from_interest = current_savings * (1 + monthly_interest)
+
     return monthly_salary_savings + savings_from_interest
 
 def is_savings_enough(current_savings, required_savings):

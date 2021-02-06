@@ -3,7 +3,7 @@ from collections import namedtuple
 
 INFINITY = float("infinity")
 
-def  is_input_valid(value, rule):
+def is_input_valid(value, rule):
     if can_convert_to_float(value):
         return is_range_valid(float(value), rule)
     else:
