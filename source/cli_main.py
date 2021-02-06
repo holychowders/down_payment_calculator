@@ -1,6 +1,8 @@
+import cli_headers
 import validate_inputs
+from calculation import Calculation
 
-class InputsFromPrompt:
+class Inputs:
     def collect(self):
         self.house_cost = self._collect(validate_inputs.Rules.HOUSE_COST)
         self.down_payment_percent = self._collect(validate_inputs.Rules.DOWN_PAYMENT_PERCENT)
@@ -20,3 +22,24 @@ class InputsFromPrompt:
         else:
             print("Invalid input")
             return self._collect(rule)
+
+
+def main():
+    cli_headers.print_program_title()
+
+    inputs = Inputs()
+    inputs.collect()
+
+    calculation = Calculation(
+        inputs.house_cost, inputs.down_payment_percent,
+        inputs.savings, inputs.interest_on_savings,
+        inputs.salary, inputs.salary_percent_saved)
+    try:
+        result = calculation.calculate()
+    except OverflowError as e:
+        cli_headers.print_with_borders(e)
+    else:
+        cli_headers.print_months_as_years_and_months(result)
+
+if __name__ == '__main__':
+    main()
